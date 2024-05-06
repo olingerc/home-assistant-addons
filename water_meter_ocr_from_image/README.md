@@ -44,3 +44,7 @@ So the actual coommand for me is: `scp -r /home/chris/workspace/home-assistant-a
 ## Coding the actual addon
 
 All credit goes to https://github.com/bvlaicu/home-assistant-addons/tree/master/meter-reader. I just changed the code to get the latest image from a remote location instead of a camera. This because I have a flash attached to my camera. I have one homeassistant automation which activates the falsh and saves a picture to my NAS. This addont hen retrieves the lates image and uses Amazon Rekogniion to extract the value.
+
+### Data structure
+My NAS has a `water_meter` folder which contains the latest image in a `latest` folder and all previously taken pictures in `previous`. The `take_snapshot` shell command in Home Assistant moves content from `latest` into `previous` and gets a picture from the camera and stores it in `latest`. Picture filenames contain the timestamp of when the picture was taken. My home assistant automation uses the shell command but turns the flash on before and off after.
+This addon is just supposed to take the picture in the latest and extract the data. It stores the name of the latest image and only extracts new data if the name changes.
