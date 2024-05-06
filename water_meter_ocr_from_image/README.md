@@ -6,7 +6,7 @@ I based myself on https://afterhourscoding.wordpress.com/2023/01/21/making-your-
 I replaced `ARG BUILD_FROM` with `ARG BUILD_FROM=homeassistant/amd64-base:latest` in Dockerfile. then just did docker build and run to test things locally
 
 ## Install locally
-Copy via ssh to ha. I have the ssh addon instsalled and configured. for me the comand is `ssh -p 23 root@192.168.178.53` for ssh with a ecdsa key. 
+Copy via ssh to ha. I have the ssh addon installed and configured. for me the comand is `ssh -p 23 root@192.168.178.53` for ssh with a ecdsa key. 
 I have ssh configured:
 ```
 Host ha
