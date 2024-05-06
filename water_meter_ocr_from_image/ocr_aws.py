@@ -6,15 +6,34 @@ import time
 import os
 import re
 import sys
+from smb.SMBConnection import SMBConnection
 
 config_json = json.loads(open("/data/options.json").read())
+
+def list_latest():
+    conn = SMBConnection(config_json["user"], config_json["password"], 'ds', 'ds')
+    conn.connect('192.168.178.111')
+    results = conn.listPath('hass_share', 'water_meter/latest')
+    latest = None
+
+    for x in results:
+        if x.filename.endswith(".jpg"):
+            latest = x.filename
+            break
+    
+    return latest
 
 if __name__ == '__main__':
     baseline = int(config_json["baseline"])
     base_low = baseline - int(config_json["under"])
     base_up = baseline + int(config_json["over"])
+    
+    _lates_picture_filename = None
+
     while True:
         print("Start")
+        latest = list_latest()
+        print(latest)
         try:
             """
             takereading()

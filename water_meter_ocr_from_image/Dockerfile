@@ -12,7 +12,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # install .py script dependency
-RUN pip3 install boto3 requests paho-mqtt
+RUN pip3 install boto3 requests paho-mqtt pysmb
 
 # Copy data for add-on
 COPY ocr_aws.py /
