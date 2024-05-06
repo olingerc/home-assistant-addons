@@ -1,3 +1,4 @@
 #!/usr/bin/with-contenv bashio
+set -e
 
-echo "Hello world!"
+python3 -u ocr_aws.py
