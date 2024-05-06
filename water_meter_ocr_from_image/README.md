@@ -3,7 +3,9 @@
 ## Development
 I based myself on https://afterhourscoding.wordpress.com/2023/01/21/making-your-own-home-assistant-add-on/
 
-I replaced `ARG BUILD_FROM` with `ARG BUILD_FROM=homeassistant/amd64-base:latest` in Dockerfile. then just did docker build and run to test things locally
+I replaced `ARG BUILD_FROM` with `ARG BUILD_FROM=homeassistant/amd64-base:latest` in Dockerfile. then just did docker build and run to test things locally.
+
+Read https://developers.home-assistant.io/docs/add-ons/testing for more details
 
 ## Install locally
 Copy via ssh to ha. I have the ssh addon installed and configured. for me the comand is `ssh -p 23 root@192.168.178.53` for ssh with a ecdsa key. 
