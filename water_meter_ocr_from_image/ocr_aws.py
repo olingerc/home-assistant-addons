@@ -102,8 +102,7 @@ def processor(base_low, baseline, base_up):
             print("Converted int: ", nw, base_low, base_up)
             if (nw >= base_low and nw <= base_up):
                 print("Value found in range:")
-                reading = temp
-                print(temp)
+                reading = nw
                 print(base_low, nw, base_up)
         print("-----------")
     print("Returning reading: ", reading)
