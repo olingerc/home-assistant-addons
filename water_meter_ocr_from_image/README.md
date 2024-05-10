@@ -8,20 +8,22 @@ For local development I mount an options.json config into the docker to imitiate
 
 ```json
 {
-    "upd_interval": 1800,
-    "user": null,
-    "password": null,
-    "baseline": 1,
-    "under": 1,
-    "over": 1,
-    "aws_access_key_id": null,
-    "aws_secret_access_key": null,
-    "region": null,
-    "mqtt_host": "127.0.0.1",
+    "upd_interval": 60,
+    "user": "xxx",
+    "password": "xxx",
+    "nas_ip": "192.168.178.111",
+    "baseline": 46394,
+    "under": 0,
+    "over": 200,
+    "crop_region": "320,240,570,300",
+    "aws_access_key_id": "xxx",
+    "aws_secret_access_key": "xxx",
+    "region": "eu-central-1",
+    "mqtt_host": "192.168.178.53",
     "mqtt_port": 1883,
-    "mqtt_user": "mqtt",
-    "mqtt_pwd": "mqtt_pwd",
-    "mqtt_topic": "home/meter"
+    "mqtt_user": "dsmr",
+    "mqtt_pwd": "home",
+    "mqtt_topic": "home/water_meter"
 }
 ```
 
@@ -47,4 +49,4 @@ All credit goes to https://github.com/bvlaicu/home-assistant-addons/tree/master/
 
 ### Data structure
 My NAS has a `water_meter` folder which contains the latest image in a `latest` folder and all previously taken pictures in `previous`. The `take_snapshot` shell command in Home Assistant moves content from `latest` into `previous` and gets a picture from the camera and stores it in `latest`. Picture filenames contain the timestamp of when the picture was taken. My home assistant automation uses the shell command but turns the flash on before and off after.
-This addon is just supposed to take the picture in the latest and extract the data. It stores the name of the latest image and only extracts new data if the name changes.
+This addon is just supposed to take the picture in the `latest` folder and extract the data. It stores the name of the latest image and only extracts new data if the name changes. Optionnalli pictures can be cropped

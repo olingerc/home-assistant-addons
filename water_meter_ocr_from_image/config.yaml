@@ -13,12 +13,13 @@ options:
   upd_interval: 1800
   user: null
   password: null
+  nas_ip: "192.168.178.111"
   baseline: 1
   under: 1
   over: 1
+  crop_region: "320,240,570,300" # left top right bottom
   aws_access_key_id: null
   aws_secret_access_key: null
-  region: null
   mqtt_host: 127.0.0.1
   mqtt_port: 1883
   mqtt_user: "mqtt"
@@ -28,9 +29,11 @@ schema:
   upd_interval: int
   user: str
   password: str
+  nas_ip: str
   baseline: int
   under: int
   over: int
+  crop_region: str?
   aws_access_key_id: str
   aws_secret_access_key: str
   region: str
