@@ -53,6 +53,7 @@ def download_latest():
             break
     
     if latest:
+        print("Extracting info from %s" % latest)
         with open(reading_path, 'wb+') as fp:
             conn.retrieveFile('hass_share', 'water_meter/latest/' + latest, fp)
             print("File downloaded") 
@@ -112,20 +113,18 @@ def processor(base_low, baseline, base_up):
             except Exception:
                 print("Conversion to int failed")
                 pass
-            print("Converted int: ", nw)
+            # print("Converted int: ", nw)
             if (nw >= base_low and nw <= base_up):
-                print("Value found in range:")
                 reading = nw
-                print(base_low, "-->", nw, "<--", base_up)
+                print("Value found in range:", base_low, "-->", nw, "<--", base_up)
         print("-----------")
-    print("Returning reading: ", reading)
     return reading
 
 
 def publishMQTT(reading):
     mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, "meter_reader")
     mqttc.username_pw_set(username=config_json["mqtt_user"], password=config_json["mqtt_pwd"])
-    mqttc.connect_async(config_json["mqtt_host"], int(config_json["mqtt_port"]))
+    mqttc.connect(config_json["mqtt_host"], int(config_json["mqtt_port"]))
     mqttc.publish(config_json["mqtt_topic"], reading, retain=True)
     mqttc.disconnect()
 
@@ -133,7 +132,7 @@ def publishMQTT(reading):
 def publishhiloMQTT(low, high):
     mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, "meter_reader")
     mqttc.username_pw_set(username=config_json["mqtt_user"], password=config_json["mqtt_pwd"])
-    mqttc.connect_async(config_json["mqtt_host"], int(config_json["mqtt_port"]))
+    mqttc.connect(config_json["mqtt_host"], int(config_json["mqtt_port"]))
     mqttc.publish("home/band/low", str(low), retain=True)
     mqttc.publish("home/band/high", str(high), retain=True)
     mqttc.disconnect()
@@ -155,13 +154,14 @@ def publishhiloMQTT(low, high):
 def do_job(base_low, baseline, base_up):
     reading = processor(base_low, baseline, base_up)
     if reading != "":
-        print("Reading = ok = ", reading)
+        print("Reading = ", reading)
         baseline = int(reading)
         base_low = baseline - int(config_json["under"])
         base_up = baseline + int(config_json["over"])
         publishMQTT(reading)
         publishhiloMQTT(base_low, base_up)
     else:
+        print("No Reading")
         base_low = base_low - int(config_json["under"])
         base_up = base_up + int(config_json["over"])
         publishhiloMQTT(base_low, base_up)
